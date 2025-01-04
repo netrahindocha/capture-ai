@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 
 function App() {
-  return <div className="App">This is Capture AI</div>;
+  return <div className="App text-3xl">This is Capture AI</div>;
 }
 
 export default App;
