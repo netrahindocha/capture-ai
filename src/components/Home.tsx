@@ -2,28 +2,61 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div className="text-3xl">
-      <div>
-        <h1 className="">Transform Speech to Smart Summaries</h1>
-        <h2>
+    <div>
+      <div className="flex flex-col items-center px-20 bg-gradient-to-r from-indigo-950 to-purple-950 h-screen">
+        <h1 className="text-7xl font-semibold text-center text-white pt-20 pb-10">
+          Transform Speech to{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#818cf8] to-[#c084fc]">
+            Smart Summaries
+          </span>
+        </h1>
+        <p className="text-[#d1d5db] text-xl px-72 text-center pb-10">
           Get instant transcripts and intelligent summaries from your recordings
           with our AI-powered space-age technology
-        </h2>
-        <button>Start Recording</button>
-        <button>Upload Audio</button>
-      </div>
-      <div>
-        <p>Ready to Record</p>
-        <p>Click to start</p>
-        <select name="length" id="length">
-          <option value="Short">Short</option>
-          <option value="Medium">Medium</option>
-          <option value="Long">Long</option>
-        </select>
-        <select name="format" id="format">
-          <option value="paragraph">Paragraph</option>
-          <option value="bullets">Bullets</option>
-        </select>
+        </p>
+        <div className="flex items-center pb-16">
+          <button className="bg-gradient-to-r from-[#4f46e5] to-[#9333ea] text-white py-4 px-10 rounded-full text-lg font-semibold mr-10">
+            Start Recording
+          </button>
+          <button className="border-2 py-4 px-10 border-[#818cf8] rounded-full text-white text-lg font-semibold">
+            Upload Audio
+          </button>
+        </div>
+        {/* Black box recording */}
+        <div className="backdrop-blur-[24px] bg-[rgba(38,38,38,0.5)] border border-[rgb(64,64,64)] text-white w-2/3 flex items-center justify-between p-8 rounded-2xl">
+          <div className="flex">
+            <div className="flex items-center justify-between">
+              <div className="flex justify-center items-center rounded-full bg-[#4f46e5] w-12 h-12">
+                <div className="flex items-center rounded-full bg-[#ef4444] w-4 h-4"></div>
+              </div>
+            </div>
+            <div className="flex flex-col pl-4">
+              <p className="text-base font-semibold">Ready to Record</p>
+              <p className="text-[#9ca3af]">Click to start</p>
+            </div>
+          </div>
+          <div>
+            <select
+              name="length"
+              id="length"
+              className="py-2 px-4 bg-[#404040] rounded-lg mr-4 border-r-8 border-transparent"
+            >
+              <option value="Short">Short Summary</option>
+              <option value="Medium">Medium Summary</option>
+              <option value="Long">Long Summary</option>
+            </select>
+            <select
+              name="format"
+              id="format"
+              className="py-2 px-4 bg-[#404040] rounded-lg mr-4 border-r-8 border-transparent"
+            >
+              <option value="paragraph">Paragraph</option>
+              <option value="bullets" selected>
+                Bullets Points
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
       <div>
         <h2>Stellar Features</h2>
