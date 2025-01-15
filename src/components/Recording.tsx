@@ -1,6 +1,23 @@
 import React from "react";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 const Recording = () => {
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  const startListening = () =>
+    SpeechRecognition.startListening({ continuous: true });
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+
   return (
     <div>
       {/* Code */}
@@ -17,7 +34,9 @@ const Recording = () => {
           {/* Recording Status */}
           <div className="flex items-center space-x-2">
             <div className="animate-pulse w-3 h-3 rounded-full bg-red-500"></div>
-            <span className="text-gray-300 font-medium">Recording Status</span>
+            <span className="text-gray-300 font-medium">
+              Recording Status : {listening ? "on" : "off"}
+            </span>
           </div>
 
           {/* Recording Time */}
@@ -45,10 +64,13 @@ const Recording = () => {
         </div>
 
         {/* Second code section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mt-5">
           {/* Audio Controls */}
           <div className="mb-8 flex justify-center space-x-4">
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg flex items-center">
+            <button
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg flex items-center"
+              onClick={startListening}
+            >
               <svg
                 className="w-5 h-5 mr-2"
                 fill="none"
@@ -64,7 +86,10 @@ const Recording = () => {
               </svg>
               Start Recording
             </button>
-            <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg flex items-center">
+            <button
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg flex items-center"
+              onClick={SpeechRecognition.stopListening}
+            >
               <svg
                 className="w-5 h-5 mr-2"
                 fill="none"
@@ -80,7 +105,10 @@ const Recording = () => {
               </svg>
               Stop
             </button>
-            <button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg flex items-center">
+            <button
+              className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg flex items-center"
+              onClick={resetTranscript}
+            >
               <svg
                 className="w-5 h-5 mr-2"
                 fill="none"
@@ -104,11 +132,15 @@ const Recording = () => {
               <h3 className="text-xl font-bold text-white mb-4">
                 Live Transcript
               </h3>
-              <textarea
-                className="w-full h-64 bg-neutral-800 text-white rounded-lg p-4 resize-none"
-                placeholder="Live transcript will appear here..."
-                readonly=""
-              ></textarea>
+              <p className="w-full h-64 bg-neutral-800 text-white rounded-lg p-4 resize-none">
+                {transcript ? (
+                  transcript
+                ) : (
+                  <span className="text-gray-400">
+                    Transcript will appear here...
+                  </span>
+                )}
+              </p>
             </div>
             <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-6 border border-neutral-600">
               <h3 className="text-xl font-bold text-white mb-4">Summary</h3>
@@ -122,6 +154,22 @@ const Recording = () => {
 
           {/* Action Buttons */}
           <div className="flex justify-center space-x-4 mb-16">
+            <button class="bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded-lg flex items-center">
+              <svg
+                class="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h7"
+                ></path>
+              </svg>
+              Summarize
+            </button>
             <button className="bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded-lg flex items-center">
               <svg
                 className="w-5 h-5 mr-2"
