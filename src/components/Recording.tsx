@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import axios from "axios";
 
 const Recording = () => {
+  const [format, setFormat] = useState("bullets"); // Default value
+  const [length, setLength] = useState("short"); // Default value
+  const [extractiveness, setExtractiveness] = useState("low"); // Default value
+  const [summary, setSummary] = useState("");
+  const [editableTranscript, setEditableTranscript] = useState("");
+
   const {
     transcript,
     listening,
@@ -11,8 +18,27 @@ const Recording = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
+  React.useEffect(() => {
+    setEditableTranscript(transcript);
+  }, [transcript]);
+
   const startListening = () =>
     SpeechRecognition.startListening({ continuous: true });
+
+  const summarize = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/summary", {
+        document: editableTranscript,
+        format,
+        length,
+        extractiveness,
+      });
+      setSummary(response.data.summary);
+    } catch (error) {
+      console.error("Error generating summary:", error);
+      alert("Failed to generate summary. Please try again.");
+    }
+  };
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -129,42 +155,125 @@ const Recording = () => {
           {/* Transcript Area */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-6 border border-neutral-600">
-              <h3 className="text-xl font-bold text-white mb-4">
-                Live Transcript
-              </h3>
-              <p className="w-full h-64 bg-neutral-800 text-white rounded-lg p-4 resize-none">
-                {transcript ? (
-                  transcript
-                ) : (
-                  <span className="text-gray-400">
-                    Transcript will appear here...
-                  </span>
-                )}
-              </p>
+              <div className="flex items-start justify-between">
+                <h3 className="text-xl font-bold text-white mb-4">
+                  Live Transcript
+                </h3>
+                <div className="flex items-center space-x-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="white"
+                    className="size-[23px]"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"
+                    />
+                  </svg>
+                  <svg
+                    stroke="white"
+                    fill="none"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-[22px]"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <polyline points="9 21 3 21 3 15"></polyline>
+                    <line x1="21" y1="3" x2="14" y2="10"></line>
+                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                  </svg>
+                </div>
+
+                {/* <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="white"
+                  className="size-[22px]"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"
+                  />
+                </svg> */}
+              </div>
+              <textarea
+                className="w-full h-64 bg-neutral-800 text-white rounded-lg p-4 resize-none"
+                placeholder="Transcript will appear here..."
+                value={editableTranscript}
+                onChange={(e) => setEditableTranscript(e.target.value)}
+              ></textarea>
             </div>
+
             <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-6 border border-neutral-600">
-              <h3 className="text-xl font-bold text-white mb-4">Summary</h3>
+              <div className="flex items-start justify-between">
+                <h3 className="text-xl font-bold text-white mb-4">Summary</h3>
+                <div className="flex items-center space-x-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="white"
+                    className="size-[23px]"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"
+                    />
+                  </svg>
+                  <svg
+                    stroke="white"
+                    fill="none"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-[22px]"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <polyline points="9 21 3 21 3 15"></polyline>
+                    <line x1="21" y1="3" x2="14" y2="10"></line>
+                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                  </svg>
+                </div>
+              </div>
               <textarea
                 className="w-full h-64 bg-neutral-800 text-white rounded-lg p-4 resize-none"
                 placeholder="Summary will appear here..."
-                readonly=""
+                value={summary || ""}
+                onChange={(e) => setSummary(e.target.value)}
               ></textarea>
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="flex justify-center space-x-4 mb-16">
-            <button class="bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded-lg flex items-center">
+            <button
+              className="bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded-lg flex items-center"
+              onClick={summarize}
+            >
               <svg
-                class="w-5 h-5 mr-2"
+                className="w-5 h-5 mr-2"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M4 6h16M4 12h16M4 18h7"
                 ></path>
               </svg>
@@ -220,9 +329,82 @@ const Recording = () => {
             </button>
           </div>
 
+          {/* All three options - Length, Format and Extractiveness */}
+
+          <div className="flex justify-center space-x-10">
+            <div>
+              <label className="text-base font-semibold text-white pr-3">
+                Length <span className="text-red-400">*</span>
+              </label>
+              <select
+                className="bg-[#202022] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                value={length}
+                onChange={(e) => setLength(e.target.value)}
+              >
+                <option value="short" selected>
+                  Short
+                </option>
+                <option value="medium">Medium</option>
+                <option value="long">Long</option>
+              </select>
+            </div>
+
+            {/* Format Options */}
+            <div>
+              <label className="text-base font-semibold text-white pr-3">
+                Format <span className="text-red-400">*</span>
+              </label>
+              <select
+                className="bg-[#202022] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                value={format}
+                onChange={(e) => setFormat(e.target.value)}
+              >
+                <option value="bullets" selected>
+                  Bullets
+                </option>
+                <option value="paragraph">Paragraph</option>
+              </select>
+            </div>
+
+            {/* Tick mark feature for selected options */}
+            {/* <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="white"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m4.5 12.75 6 6 9-13.5"
+              />
+            </svg> */}
+
+            {/* Extractiveness Options */}
+
+            <div>
+              <label className="text-base font-semibold text-white pr-3">
+                Extractiveness <span className="text-red-400">*</span>
+              </label>
+              <select
+                className="bg-[#202022] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                value={extractiveness}
+                onChange={(e) => setExtractiveness(e.target.value)}
+              >
+                <option value="low" selected>
+                  Low
+                </option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Format Options */}
-            <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-8 border border-neutral-600 animate__animated animate__fadeInLeft">
+            {/* <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-8 border border-neutral-600 animate__animated animate__fadeInLeft">
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
                 <svg
                   className="w-6 h-6 mr-2 text-indigo-400"
@@ -288,10 +470,10 @@ const Recording = () => {
                   </label>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Length Options */}
-            <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-8 border border-neutral-600 animate__animated animate__fadeInRight">
+            {/* <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-8 border border-neutral-600 animate__animated animate__fadeInRight">
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
                 <svg
                   className="w-6 h-6 mr-2 text-purple-400"
@@ -327,7 +509,7 @@ const Recording = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
