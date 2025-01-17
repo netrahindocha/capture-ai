@@ -27,12 +27,15 @@ const Recording = () => {
 
   const summarize = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/summary", {
-        document: editableTranscript,
-        format,
-        length,
-        extractiveness,
-      });
+      const response = await axios.post(
+        "https://capture-ai-backend.onrender.com/api/summary",
+        {
+          document: editableTranscript,
+          format,
+          length,
+          extractiveness,
+        }
+      );
       setSummary(response.data.summary);
     } catch (error) {
       console.error("Error generating summary:", error);
