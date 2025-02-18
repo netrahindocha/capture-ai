@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-// import Dashboard from "./components/Dashboard.tsx";
 import Home from "./components/Home.tsx";
 import Login from "./components/Login.tsx";
 import SignUp from "./components/SignUp.tsx";
