@@ -1384,7 +1384,7 @@ const Home = () => {
 
       {/* Stellar Pricing Plans */}
 
-      <section
+      {/* <section
         id="pricing"
         className="bg-neutral-800 py-24 relative overflow-hidden"
       >
@@ -1399,7 +1399,6 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Basic Plan */}
             <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-8 border border-neutral-600 transform hover:scale-105 transition-all animate__animated animate__fadeInLeft">
               <div className="text-center">
                 <div className="w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -1490,7 +1489,6 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Pro Plan */}
             <div className="bg-gradient-to-b from-neutral-700/50 to-neutral-800/50 backdrop-blur-xl rounded-2xl p-8 border border-indigo-500 transform hover:scale-105 transition-all animate__animated animate__fadeInUp relative">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm">
                 Most Popular
@@ -1595,7 +1593,6 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Enterprise Plan */}
             <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-8 border border-neutral-600 transform hover:scale-105 transition-all animate__animated animate__fadeInRight">
               <div className="text-center">
                 <div className="w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -1693,12 +1690,11 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl"></div>
         </div>
-      </section>
+      </section> */}
 
       {/* Cosmic Reviews */}
 
@@ -1899,7 +1895,7 @@ const Home = () => {
               <div className="flex items-center mb-6">
                 <h3 className="text-2xl font-bold text-white">CaptureAI</h3>
               </div>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-400 mb-6 text-left">
                 Transforming audio into intelligent insights with space-age
                 technology
               </p>
