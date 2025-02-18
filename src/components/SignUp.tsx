@@ -55,7 +55,7 @@ const SignUp = () => {
 
   // Google SignUp handler
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5000/api/auth/google"; // Redirect to backend
+    window.location.href = `${process.env.BASE_URL}auth/google`; // Redirect to backend
   };
 
   return (
