@@ -12,9 +12,6 @@ const Recording = () => {
   const [summary, setSummary] = useState("");
   const [editableTranscript, setEditableTranscript] = useState("");
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [userAuthenticated, setUserAuthenticated] = useState(false);
-
   const {
     transcript,
     listening,
@@ -37,9 +34,7 @@ const Recording = () => {
       .then((res) => {
         console.log(res.status);
         if (res.status === 200) {
-          setUserAuthenticated(true);
         } else {
-          setUserAuthenticated(false);
           // Redirect to login if not authenticated
           navigate("/login");
         }
@@ -47,7 +42,6 @@ const Recording = () => {
       })
       .catch((err) => {
         console.log("Error checking auth status: ", err);
-        setUserAuthenticated(false);
         navigate("/login");
       });
   }, [navigate]);
