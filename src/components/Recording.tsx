@@ -11,6 +11,8 @@ const Recording = () => {
   const [extractiveness, setExtractiveness] = useState("low"); // Default value
   const [summary, setSummary] = useState("");
   const [editableTranscript, setEditableTranscript] = useState("");
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   const {
