@@ -57,7 +57,7 @@ const Login = () => {
 
   // Google OAuth login handler
   const handleGoogleLogin = () => {
-    window.location.href = `${process.env.REACT_APP_BASE_URL}/auth/google`; // Redirect to backend
+    window.location.href = `${process.env.REACT_APP_BASE_URL}/api/auth/google`; // Redirect to backend
   };
 
   return (
@@ -129,7 +129,7 @@ const Login = () => {
             </div>
 
             {/* Login Form */}
-            <form id="el-4q4kzljg">
+            <form id="el-4q4kzljg" onSubmit={handleFormSubmit}>
               <div className="space-y-4" id="el-cfhszgvk">
                 <div id="el-mgbbwzvg">
                   <label
@@ -195,7 +195,6 @@ const Login = () => {
 
                 <button
                   type="submit"
-                  onClick={handleFormSubmit}
                   className={`w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-lg py-3 font-medium transition-all duration-200 ${
                     isLoading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
