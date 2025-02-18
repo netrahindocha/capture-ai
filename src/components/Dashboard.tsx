@@ -7,7 +7,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Fetch user data from the backend
-    fetch("http://localhost:5000/dashboard", {
+    fetch(`${process.env.REACT_APP_BASE_URL}/home`, {
       credentials: "include", // Include cookies for session management
     })
       .then((res) => {

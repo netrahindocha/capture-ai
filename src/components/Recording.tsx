@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Recording = () => {
   const [format, setFormat] = useState("bullets"); // Default value
@@ -10,6 +11,7 @@ const Recording = () => {
   const [extractiveness, setExtractiveness] = useState("low"); // Default value
   const [summary, setSummary] = useState("");
   const [editableTranscript, setEditableTranscript] = useState("");
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   const {
     transcript,
@@ -18,9 +20,35 @@ const Recording = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setEditableTranscript(transcript);
   }, [transcript]);
+
+  const navigate = useNavigate();
+
+  // useEffect
+  useEffect(() => {
+    // Fetch user data from the backend
+    fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/status`, {
+      credentials: "include", // Include cookies for session management
+    })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          setUserAuthenticated(true);
+        } else {
+          setUserAuthenticated(false);
+          // Redirect to login if not authenticated
+          navigate("/login");
+        }
+        return res.json();
+      })
+      .catch((err) => {
+        console.log("Error checking auth status: ", err);
+        setUserAuthenticated(false);
+        navigate("/login");
+      });
+  }, [navigate]);
 
   const startListening = () =>
     SpeechRecognition.startListening({ continuous: true });

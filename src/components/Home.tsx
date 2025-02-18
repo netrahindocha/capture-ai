@@ -1,12 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "animate.css";
 
 const Home = () => {
+  // const [user, setUser] = useState(null);
+
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
+
   const navigate = useNavigate();
+
   const navigateToRecording = () => {
     navigate("/recording");
   };
+
+  // useEffect
+  useEffect(() => {
+    // Fetch user data from the backend
+    fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/status`, {
+      credentials: "include", // Include cookies for session management
+    })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 200) {
+          setUserAuthenticated(true);
+        } else {
+          setUserAuthenticated(false);
+          // Redirect to login if not authenticated
+          navigate("/login");
+        }
+        return res.json();
+      })
+      .catch((err) => {
+        console.log("Error checking auth status: ", err);
+        setUserAuthenticated(false);
+        navigate("/login");
+      });
+    // .then((data) => {
+    //   console.log(data);
+    //   setUser(data.user);
+    // })
+    // .catch((err) => console.error("Error fetching dashboard:", err));
+  }, [navigate]);
+
   return (
     <div>
       {/* Rough */}
