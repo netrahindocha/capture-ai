@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "animate.css";
 
 const Home = () => {
   // const [user, setUser] = useState(null);
-
-  const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,9 +20,7 @@ const Home = () => {
       .then((res) => {
         console.log(res.status);
         if (res.status === 200) {
-          setUserAuthenticated(true);
         } else {
-          setUserAuthenticated(false);
           // Redirect to login if not authenticated
           navigate("/login");
         }
@@ -32,7 +28,6 @@ const Home = () => {
       })
       .catch((err) => {
         console.log("Error checking auth status: ", err);
-        setUserAuthenticated(false);
         navigate("/login");
       });
     // .then((data) => {
