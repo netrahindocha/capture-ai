@@ -55,7 +55,7 @@ const Recording = () => {
 
       <section
         id="summaryOptions"
-        className="bg-neutral-800 py-24 relative overflow-hidden"
+        className="bg-neutral-900 py-24 relative overflow-hidden"
       >
         {/* First code audio control section */}
 
@@ -97,7 +97,7 @@ const Recording = () => {
           {/* Audio Controls */}
           <div className="mb-8 flex justify-center space-x-4">
             <button
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg flex items-center"
+              className="bg-indigo-600/70 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg flex items-center"
               onClick={startListening}
             >
               <svg
@@ -116,7 +116,7 @@ const Recording = () => {
               Start Recording
             </button>
             <button
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg flex items-center"
+              className="bg-red-600/70 hover:bg-red-700 text-white px-6 py-3 rounded-lg flex items-center"
               onClick={SpeechRecognition.stopListening}
             >
               <svg
@@ -157,7 +157,8 @@ const Recording = () => {
 
           {/* Transcript Area */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-6 border border-neutral-600">
+            {/* <div className="w-20 h-20 mx-auto bg-indigo-600/20 rounded-full flex items-center justify-center mb-4"> */}
+            <div className="bg-neutral-600/20 rounded-2xl p-6 border border-neutral-700">
               <div className="flex items-start justify-between">
                 <h3 className="text-xl font-bold text-white mb-4">
                   Live Transcript
@@ -210,14 +211,14 @@ const Recording = () => {
                 </svg> */}
               </div>
               <textarea
-                className="w-full h-64 bg-neutral-800 text-white rounded-lg p-4 resize-none"
+                className="w-full h-64 bg-neutral-900 text-white rounded-lg p-4 resize-none"
                 placeholder="Transcript will appear here..."
                 value={editableTranscript}
                 onChange={(e) => setEditableTranscript(e.target.value)}
               ></textarea>
             </div>
 
-            <div className="bg-neutral-700/50 backdrop-blur-xl rounded-2xl p-6 border border-neutral-600">
+            <div className="bg-neutral-600/20 backdrop-blur-xl rounded-2xl p-6 border border-neutral-700">
               <div className="flex items-start justify-between">
                 <h3 className="text-xl font-bold text-white mb-4">Summary</h3>
                 <div className="flex items-center space-x-4">
@@ -253,7 +254,7 @@ const Recording = () => {
                 </div>
               </div>
               <textarea
-                className="w-full h-64 bg-neutral-800 text-white rounded-lg p-4 resize-none"
+                className="w-full h-64 bg-neutral-900 text-white rounded-lg p-4 resize-none"
                 placeholder="Summary will appear here..."
                 value={summary || ""}
                 onChange={(e) => setSummary(e.target.value)}
@@ -262,13 +263,13 @@ const Recording = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-center space-x-4 mb-16">
+          <div className="flex justify-center space-x-7 mb-16">
             <button
-              className="bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded-lg flex items-center"
+              className="text-white px-4 py-2 rounded-lg flex items-center bg-indigo-600/30 hover:bg-indigo-600/70"
               onClick={summarize}
             >
               <svg
-                className="w-5 h-5 mr-2"
+                className="w-5 h-5 mr-2 text-indigo-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -282,9 +283,9 @@ const Recording = () => {
               </svg>
               Summarize
             </button>
-            <button className="bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded-lg flex items-center">
+            <button className="bg-indigo-600/30 hover:bg-indigo-600/70 text-white px-4 py-2 rounded-lg flex items-center">
               <svg
-                className="w-5 h-5 mr-2"
+                className="w-5 h-5 mr-2 text-indigo-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -298,9 +299,9 @@ const Recording = () => {
               </svg>
               Copy
             </button>
-            <button className="bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded-lg flex items-center">
+            <button className="bg-purple-600/30 hover:bg-purple-600/70 text-white px-4 py-2 rounded-lg flex items-center">
               <svg
-                className="w-5 h-5 mr-2"
+                className="w-5 h-5 mr-2 text-purple-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -314,9 +315,9 @@ const Recording = () => {
               </svg>
               Export
             </button>
-            <button className="bg-neutral-700 hover:bg-neutral-600 text-white px-4 py-2 rounded-lg flex items-center">
+            <button className="bg-purple-600/30 hover:bg-purple-600/70 text-white px-4 py-2 rounded-lg flex items-center">
               <svg
-                className="w-5 h-5 mr-2"
+                className="w-5 h-5 mr-2 text-purple-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -340,7 +341,7 @@ const Recording = () => {
                 Length <span className="text-red-400">*</span>
               </label>
               <select
-                className="bg-[#202022] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="bg-[#2d2d30] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent border-r-8 border-transparent"
                 value={length}
                 onChange={(e) => setLength(e.target.value)}
               >
@@ -358,7 +359,7 @@ const Recording = () => {
                 Format <span className="text-red-400">*</span>
               </label>
               <select
-                className="bg-[#202022] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="bg-[#2d2d30] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent border-r-8 border-transparent"
                 value={format}
                 onChange={(e) => setFormat(e.target.value)}
               >
@@ -392,7 +393,7 @@ const Recording = () => {
                 Extractiveness <span className="text-red-400">*</span>
               </label>
               <select
-                className="bg-[#202022] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="bg-[#2d2d30] text-white border-2 border-[#3a3a3b] rounded-lg py-3 px-4 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent border-r-8 border-transparent"
                 value={extractiveness}
                 onChange={(e) => setExtractiveness(e.target.value)}
               >
