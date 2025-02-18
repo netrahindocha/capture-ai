@@ -57,7 +57,7 @@ const Login = () => {
 
   // Google OAuth login handler
   const handleGoogleLogin = () => {
-    window.location.href = `${process.env.BASE_URL}/auth/google`; // Redirect to backend
+    window.location.href = `${process.env.REACT_APP_BASE_URL}/auth/google`; // Redirect to backend
   };
 
   return (
