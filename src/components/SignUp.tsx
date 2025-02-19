@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosInstance from "../utils/axios.tsx";
+import axiosInstance from "../utils/axios.ts";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +37,7 @@ const SignUp = () => {
     setIsLoading(true);
     setErrorMessages({});
     try {
-      const response = await axiosInstance.post("/api/auth/signup", {
+      const response = await axiosInstance.post("/auth/signup", {
         fullName: signUpData.fullName,
         email: signUpData.email,
         password: signUpData.password,
@@ -54,8 +54,8 @@ const SignUp = () => {
   };
 
   // Google SignUp handler
-  const handleGoogleLogin = () => {
-    window.location.href = `${process.env.REACT_BASE_URL}/api/auth/google`; // Redirect to backend
+  const handleGoogleSignup = () => {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}/api/auth/google`;
   };
 
   return (
@@ -87,7 +87,7 @@ const SignUp = () => {
               {/* SignUp with Google */}
               <button
                 className=" w-full flex items-center justify-center px-4 py-3 border gap-2 mb-6 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
-                onClick={handleGoogleLogin}
+                onClick={handleGoogleSignup}
               >
                 <img
                   className="w-6 h-6"
