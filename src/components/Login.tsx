@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosInstance from "../utils/axios.tsx";
+import axiosInstance from "../utils/axios.ts";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -35,7 +35,7 @@ const Login = () => {
     setIsLoading(true);
     setErrorMessages({});
     try {
-      const response = await axiosInstance.post("/api/auth/login", {
+      const response = await axiosInstance.post("/auth/login", {
         email: loginData.email,
         password: loginData.password,
       });
@@ -57,7 +57,7 @@ const Login = () => {
 
   // Google OAuth login handler
   const handleGoogleLogin = () => {
-    window.location.href = `${process.env.REACT_APP_BASE_URL}/api/auth/google`; // Redirect to backend
+    window.location.href = `${process.env.REACT_APP_BASE_URL}/api/auth/google`;
   };
 
   return (
