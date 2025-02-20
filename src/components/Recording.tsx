@@ -3,8 +3,6 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import axiosInstance from "../utils/axios.ts";
 
 const Recording = () => {
   const [format, setFormat] = useState("bullets"); // Default value
@@ -23,41 +21,6 @@ const Recording = () => {
   useEffect(() => {
     setEditableTranscript(transcript);
   }, [transcript]);
-
-  const navigate = useNavigate();
-
-  // useEffect
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axiosInstance.get("/", {
-          withCredentials: true,
-        });
-        if (!response.data.authenticated) {
-          navigate("/login");
-        }
-      } catch (err) {
-        console.log("Error checking authentication: ", err);
-        navigate("/login");
-      }
-    };
-    checkAuth();
-  }, [navigate]);
-
-  // useEffect(() => {
-  //   fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/login`, {
-  //     credentials: "include",
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.status !== "SUCCESS") {
-  //         navigate("/login");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error checking authentication: ", err);
-  //     });
-  // }, [navigate]);
 
   const startListening = () =>
     SpeechRecognition.startListening({ continuous: true });
@@ -392,9 +355,7 @@ const Recording = () => {
                 value={length}
                 onChange={(e) => setLength(e.target.value)}
               >
-                <option value="short" selected>
-                  Short
-                </option>
+                <option value="short">Short</option>
                 <option value="medium">Medium</option>
                 <option value="long">Long</option>
               </select>
@@ -410,9 +371,7 @@ const Recording = () => {
                 value={format}
                 onChange={(e) => setFormat(e.target.value)}
               >
-                <option value="bullets" selected>
-                  Bullets
-                </option>
+                <option value="bullets">Bullets</option>
                 <option value="paragraph">Paragraph</option>
               </select>
             </div>
@@ -444,9 +403,7 @@ const Recording = () => {
                 value={extractiveness}
                 onChange={(e) => setExtractiveness(e.target.value)}
               >
-                <option value="low" selected>
-                  Low
-                </option>
+                <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
               </select>
