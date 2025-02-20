@@ -1,41 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "animate.css";
 
 const Home = () => {
-  // const [user, setUser] = useState(null);
-
   const navigate = useNavigate();
 
   const navigateToRecording = () => {
     navigate("/recording");
   };
-
-  // useEffect
-  useEffect(() => {
-    // Fetch user data from the backend
-    fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/status`, {
-      credentials: "include", // Include cookies for session management
-    })
-      .then((res) => {
-        console.log(res.status);
-        if (res.status === 200) {
-        } else {
-          // Redirect to login if not authenticated
-          navigate("/login");
-        }
-        return res.json();
-      })
-      .catch((err) => {
-        console.log("Error checking auth status: ", err);
-        navigate("/login");
-      });
-    // .then((data) => {
-    //   console.log(data);
-    //   setUser(data.user);
-    // })
-    // .catch((err) => console.error("Error fetching dashboard:", err));
-  }, [navigate]);
 
   return (
     <div>
@@ -1121,7 +1093,7 @@ const Home = () => {
                     id="bullet"
                     className="form-radio h-5 w-5 text-indigo-600"
                   />
-                  <label for="bullet" className="ml-4 text-white">
+                  <label htmlhtmlFor="bullet" className="ml-4 text-white">
                     <span className="font-semibold block">Bullet Points</span>
                     <span className="text-gray-400 text-sm">
                       Clear, concise key points
@@ -1136,7 +1108,7 @@ const Home = () => {
                     id="paragraph"
                     className="form-radio h-5 w-5 text-indigo-600"
                   />
-                  <label for="paragraph" className="ml-4 text-white">
+                  <label htmlFor="paragraph" className="ml-4 text-white">
                     <span className="font-semibold block">
                       Paragraph Format
                     </span>
@@ -1153,7 +1125,7 @@ const Home = () => {
                     id="chapters"
                     className="form-radio h-5 w-5 text-indigo-600"
                   />
-                  <label for="chapters" className="ml-4 text-white">
+                  <label htmlFor="chapters" className="ml-4 text-white">
                     <span className="font-semibold block">Chapter Style</span>
                     <span className="text-gray-400 text-sm">
                       Organized by topics

@@ -27,22 +27,17 @@ const Recording = () => {
 
   // useEffect
   useEffect(() => {
-    // Fetch user data from the backend
-    fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/status`, {
-      credentials: "include", // Include cookies for session management
+    fetch(`${process.env.REACT_APP_BASE_URL}/`, {
+      credentials: "include",
     })
-      .then((res) => {
-        console.log(res.status);
-        if (res.status === 200) {
-        } else {
-          // Redirect to login if not authenticated
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.authenticated) {
           navigate("/login");
         }
-        return res.json();
       })
       .catch((err) => {
-        console.log("Error checking auth status: ", err);
-        navigate("/login");
+        console.log("Error checking authentication: ", err);
       });
   }, [navigate]);
 
