@@ -66,6 +66,13 @@ const Recording = () => {
     return <span>Browser doesn't support speech recognition.</span>;
   }
 
+  const handleLogout = async () => {
+    await fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/logout`, {
+      credentials: "include",
+    });
+    window.location.href = "/login";
+  };
+
   return (
     <div>
       {/* Code */}
@@ -302,7 +309,10 @@ const Recording = () => {
               </svg>
               Summarize
             </button>
-            <button className="bg-indigo-600/30 hover:bg-indigo-600/70 text-white px-4 py-2 rounded-lg flex items-center">
+            <button
+              className="bg-indigo-600/30 hover:bg-indigo-600/70 text-white px-4 py-2 rounded-lg flex items-center"
+              onClick={handleLogout}
+            >
               <svg
                 className="w-5 h-5 mr-2 text-indigo-400"
                 fill="none"
