@@ -4,7 +4,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../utils/axios";
+import axiosInstance from "../utils/axios.ts";
 
 const Recording = () => {
   const [format, setFormat] = useState("bullets"); // Default value
