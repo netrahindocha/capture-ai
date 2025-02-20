@@ -41,6 +41,23 @@ const Recording = () => {
       });
   }, [navigate]);
 
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/login`, {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "SUCCESS") {
+          navigate("/recording");
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log("Error checking authentication: ", err);
+      });
+  }, [navigate]);
+
   const startListening = () =>
     SpeechRecognition.startListening({ continuous: true });
 
