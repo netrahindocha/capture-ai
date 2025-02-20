@@ -4,6 +4,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/axios";
 
 const Recording = () => {
   const [format, setFormat] = useState("bullets"); // Default value
@@ -27,18 +28,20 @@ const Recording = () => {
 
   // useEffect
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BASE_URL}/`, {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.authenticated) {
+    const checkAuth = async () => {
+      try {
+        const response = await axiosInstance.get("/", {
+          withCredentials: true,
+        });
+        if (!response.data.authenticated) {
           navigate("/login");
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log("Error checking authentication: ", err);
-      });
+        navigate("/login");
+      }
+    };
+    checkAuth();
   }, [navigate]);
 
   // useEffect(() => {

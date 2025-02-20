@@ -35,7 +35,7 @@ const Login = () => {
     setIsLoading(true);
     setErrorMessages({});
     try {
-      const response = await axiosInstance.post("/auth/login", {
+      const response = await axiosInstance.post("/api/auth/login", {
         email: loginData.email,
         password: loginData.password,
       });

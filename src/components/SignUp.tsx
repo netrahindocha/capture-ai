@@ -37,7 +37,7 @@ const SignUp = () => {
     setIsLoading(true);
     setErrorMessages({});
     try {
-      const response = await axiosInstance.post("/auth/signup", {
+      const response = await axiosInstance.post("/api/auth/signup", {
         fullName: signUpData.fullName,
         email: signUpData.email,
         password: signUpData.password,
